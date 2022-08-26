@@ -11,7 +11,7 @@ describe('Central de atendimento ao cliente TAT', () => {
 
   context('envio de formulário', () => {
     it('verificar envio do formulário (cenário de sucesso)', () => {
-      cy.fillMandatoryFieldsAndSubmit() // comando customizado
+      cy.fillMandatoryFields() // comando customizado
   
       cy.contains('Enviar').click()
       cy.get('.success').should('be.visible')
@@ -37,7 +37,7 @@ describe('Central de atendimento ao cliente TAT', () => {
     });
 
     it('verificar envio do formuário com erro, quando o telefone se torna obrigatório (campo telefone não preenchido)', () => {
-      cy.fillMandatoryFieldsAndSubmit()
+      cy.fillMandatoryFields()
 
       cy.get('#phone-checkbox').click()
       cy.contains('Enviar').click()
