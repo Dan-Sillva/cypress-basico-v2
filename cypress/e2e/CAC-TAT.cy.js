@@ -67,4 +67,18 @@ describe('Central de atendimento ao cliente TAT', () => {
 
   });
 
+  context('select de produto', () => {
+    it.only('selecionando um produto (texto)', () => {
+      cy.get('#product').select('Cursos')
+      cy.get('#product').should('have.value', 'cursos')
+      
+      cy.get('#product').select('youtube')
+      cy.get('#product').should('have.value', 'youtube')
+
+      cy.get('#product').select(1)
+      cy.get('#product').should('have.value', 'blog')
+
+    });
+  });
+
 })
