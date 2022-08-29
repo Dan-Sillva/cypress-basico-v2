@@ -68,7 +68,7 @@ describe('Central de atendimento ao cliente TAT', () => {
   });
 
   context('select de produto', () => {
-    it.only('selecionando um produto (texto)', () => {
+    it('verificar a seleção de um produto (texto)', () => {
       cy.get('#product').select('Cursos')
       cy.get('#product').should('have.value', 'cursos')
       
@@ -77,6 +77,24 @@ describe('Central de atendimento ao cliente TAT', () => {
 
       cy.get('#product').select(1)
       cy.get('#product').should('have.value', 'blog')
+
+    });
+  });
+
+  context('check no input do tipo radio', () => {
+    it('verificar o input radio', () => {
+      cy.get('[value="elogio"]').check()
+      cy.get('[value="elogio"]').should('be.checked')
+
+    });
+
+    it('verificar cada check', () => {
+      
+      cy.get('[type="radio"]')
+      .should('have.length', 3).each((val) => {
+        cy.wrap(val).check()
+        cy.wrap(val).should('be.checked')
+      } )
 
     });
   });
