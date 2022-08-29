@@ -39,7 +39,7 @@ describe('Central de atendimento ao cliente TAT', () => {
     it('verificar envio do formuário com erro, quando o telefone se torna obrigatório (campo telefone não preenchido)', () => {
       cy.fillMandatoryFields()
 
-      cy.get('#phone-checkbox').click()
+      cy.get('#phone-checkbox').check()
       cy.contains('Enviar').click()
       
       cy.get('.error').should('be.visible')
@@ -97,6 +97,19 @@ describe('Central de atendimento ao cliente TAT', () => {
       } )
 
     });
+  });
+
+  context('marcando e desmarcando inputs do tipo checkbox', () => {
+    it.only('testando os checkbox', () => {
+      cy.get('[type="checkbox"]').each((val) => {
+        cy.wrap(val).check()
+        cy.wrap(val).should('be.checked')
+      });
+
+      cy.get('[type="checkbox"]').last().uncheck()
+      cy.get('#phone-checkbox').should('not.be.checked')
+    });
+
   });
 
 })
