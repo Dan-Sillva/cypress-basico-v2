@@ -100,7 +100,7 @@ describe('Central de atendimento ao cliente TAT', () => {
   });
 
   context('marcando e desmarcando inputs do tipo checkbox', () => {
-    it.only('testando os checkbox', () => {
+    it('testando os checkbox', () => {
       cy.get('[type="checkbox"]').each((val) => {
         cy.wrap(val).check()
         cy.wrap(val).should('be.checked')
@@ -108,6 +108,34 @@ describe('Central de atendimento ao cliente TAT', () => {
 
       cy.get('[type="checkbox"]').last().uncheck()
       cy.get('#phone-checkbox').should('not.be.checked')
+    });
+
+  });
+
+  context('selecionando arquivo e anexando ao formulário', () => {
+    it('selecionar arquivo da pasta fixtures', () => {
+      const filePath = '../fixtures/genericFile.txt'
+
+      cy.get('#file-upload')
+      .should('not.have.value').attachFile(filePath)
+      
+      cy.get('#file-upload')
+      .should((input) => {
+        expect(input[0].files[0].name).to.eq('genericFile.txt')
+      })
+
+    });
+
+    it('selecionar um arquivo simulando drag-and-drop e utilizando alias', () => {
+      // cy.fixture('arquivo').as('alias-do-arquivo')
+
+      cy.get('#file-upload')
+      .should('not.have.value').attachFile('genericFile.txt', { action: 'drag-drop' })
+      
+      cy.get('#file-upload')
+      .should((input) => {
+        expect(input[0].files[0].name).to.eq('genericFile.txt')
+      })
     });
 
   });
