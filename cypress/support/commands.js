@@ -32,5 +32,5 @@ Cypress.Commands.add('fillMandatoryFields', () => {
 
     cy.get('#email').type('mail@example.com')
 
-    cy.get('#open-text-area').type('Traz a budweiser do pai', {"delay":40})
+    cy.get('#open-text-area').type('Traz a budweiser do pai', {"delay":0})
 })
