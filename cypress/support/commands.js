@@ -27,10 +27,10 @@
 import 'cypress-file-upload';
 
 Cypress.Commands.add('fillMandatoryFields', () => {
-    cy.get('#firstName').type('Danilo')
-    cy.get('#lastName').type('Araujo Silva')
+    cy.get('#firstName').invoke('val', 'Danilo')
+    cy.get('#lastName').invoke('val', 'Araujo Silva')
 
-    cy.get('#email').type('mail@example.com')
+    cy.get('#email').invoke('val', 'mail@example.com')
 
-    cy.get('#open-text-area').type('Traz a budweiser do pai', {"delay":0})
+    cy.get('#open-text-area').invoke('val', 'Traz a budweiser do pai')
 })

@@ -10,59 +10,79 @@ describe('Central de atendimento ao cliente TAT', () => {
   });
 
   context('envio de formulário', () => {
-    it('verificar envio do formulário (cenário de sucesso)', () => {
-      cy.fillMandatoryFields() // comando customizado
+    Cypress._.times(5, () => {
+      it('verificar envio do formulário (cenário de sucesso)', () => {
+        cy.clock()
+        cy.fillMandatoryFields() // comando customizado
+    
+        cy.contains('Enviar').click()
+        cy.get('.success').should('be.visible')
   
-      cy.contains('Enviar').click()
-      cy.get('.success').should('be.visible')
-    });
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
+      });
+    })
 
     it('verificar envio do formuário com erro na formatação do email', () => {
-      cy.get('#firstName').type('Danilo')
-      cy.get('#lastName').type('Araujo Silva')
+      cy.clock()
+      
+      cy.get('#firstName').invoke('val', 'Danilo')
+      cy.get('#lastName').invoke('val', 'Araujo Silva')
   
-      cy.get('#email').type('mail@ex')
+      cy.get('#email').invoke('val', 'mail@ex')
   
-      cy.get('#open-text-area').type('Traz a budweiser do pai')
+      cy.get('#open-text-area').invoke('val', 'Traz a budweiser do pai')
   
       cy.contains('Enviar').click()
   
       cy.get('.error').should('be.visible')
+
+      cy.tick(3000)
+      cy.get('.error').should('not.be.visible')
     });
 
     it('verificando restrição do campo de telefone (somente numeros)', () => {
-      cy.get('#phone').type('asdfasdfasdf')
+      cy.get('#phone').invoke('val', 'asdfasdfasdf')
 
       cy.get('#phone').should('have.value', '')
     });
 
     it('verificar envio do formuário com erro, quando o telefone se torna obrigatório (campo telefone não preenchido)', () => {
+      cy.clock()
+
       cy.fillMandatoryFields()
 
       cy.get('#phone-checkbox').check()
       cy.contains('Enviar').click()
       
       cy.get('.error').should('be.visible')
+
+      cy.tick(3000)
+      cy.get('.error').should('not.be.visible')
     });
 
     it('verificar campos ao preencher e limpar seu conteudo', () => {
-      cy.get('#firstName').type('Danilo').should('have.value', 'Danilo')
+      cy.get('#firstName').invoke('val', 'Danilo').should('have.value', 'Danilo')
       .clear().should('have.value', '') 
 
-      cy.get('#lastName').type('Araujo Silva').should('have.value', 'Araujo Silva')
+      cy.get('#lastName').invoke('val', 'Araujo Silva').should('have.value', 'Araujo Silva')
       .clear().should('have.value', '')
 
-      cy.get('#email').type('mail@example.com').should('have.value', 'mail@example.com')
+      cy.get('#email').invoke('val', 'mail@example.com').should('have.value', 'mail@example.com')
       .clear().should('have.value', '')
 
-      cy.get('#open-text-area').type('testeee').should('have.value', 'testeee')
+      cy.get('#open-text-area').invoke('val', 'testeee').should('have.value', 'testeee')
       .clear().should('have.value', '')
     });
 
     it('verificar envio do formulário sem preencher os campos', () => {
+      cy.clock()
+      
       cy.contains('Enviar').click()
-
       cy.get('.error').should('be.visible')
+
+      cy.tick(3000)
+      cy.get('.error').should('not.be.visible')
     });
 
   });
@@ -152,6 +172,26 @@ describe('Central de atendimento ao cliente TAT', () => {
         .click()
 
       cy.get('#title').should('have.text', 'CAC TAT - Política de privacidade') 
+    });
+  });
+
+  context('validando mensagens de sucesso e erro utilizando invoke ', () => {
+    it('validar mensagem de sucesso', () => {
+      cy.get('.success')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .invoke('hide')
+        .should('not.be.visible')
+    });
+
+    it('validar mensagem de erro', () => {
+      cy.get('.error')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .invoke('hide')
+        .should('not.be.visible')
     });
   });
 
