@@ -195,4 +195,15 @@ describe('Central de atendimento ao cliente TAT', () => {
     });
   });
 
+  context('teste da aplicação via requisição a nivel de rede', () => {
+    it.only('realizar uma requisição http', () => {
+      cy.request('GET', 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+        .then((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.statusText).to.eq('OK')
+          expect(response.body).to.include('CAC TAT')
+        });
+    });
+  });
+
 })
