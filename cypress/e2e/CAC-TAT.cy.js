@@ -2,7 +2,7 @@
 
 describe('Central de atendimento ao cliente TAT', () => {
   beforeEach(() => {
-    cy.visit('localhost:5500/src')
+    cy.visit('./src/index.html')
   });
   
   it('verificar o titulo da aplicação', () => {

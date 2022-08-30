@@ -2,7 +2,7 @@
 
 describe('testando a página de politica de privacidade de forma independente', () => {
     beforeEach(() => {
-        cy.visit('localhost:5500/src/privacy.html')
+        cy.visit('./src/privacy.html')
     });
     
     it('verificando titulo', () => {
