@@ -140,4 +140,19 @@ describe('Central de atendimento ao cliente TAT', () => {
 
   });
 
+  context('lidando com links para outra aba do navegador', () => {
+    it('verificar politica de privacidade sem clicar na mesma', () => {
+      // verificar se o link está configurado para abrir em uma nova guia
+      cy.contains('Política de Privacidade').should('have.attr', 'target', '_blank')
+    });
+    
+    it('verificar politica de privacidade clicando no link', () => {
+      cy.contains('Política de Privacidade')
+        .invoke('removeAttr', 'target')
+        .click()
+
+      cy.get('#title').should('have.text', 'CAC TAT - Política de privacidade') 
+    });
+  });
+
 })
